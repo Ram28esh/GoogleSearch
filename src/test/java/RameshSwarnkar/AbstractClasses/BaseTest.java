@@ -15,12 +15,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
 import RameshSwarnkar.ObjectClasses.LandingPage;
 
 public class BaseTest {
 
 	public WebDriver driver;
 	public Properties prop;
+	public ExtentReports extent;
 
 	public void getData() throws IOException {
 		prop = new Properties();
@@ -44,6 +49,21 @@ public class BaseTest {
 
 	}
 	
+	public ExtentReports extentReportConfig() {
+		String file= System.getProperty("user.dir") + "//test-output//ExtentReports//TestReport.html";
+		ExtentSparkReporter reporter = new ExtentSparkReporter(file);
+		
+		reporter.config().setDocumentTitle("Google Search Results");
+		reporter.config().setReportName("Ramesh Swarnkar Result");
+		
+		extent = new ExtentReports();
+		extent.attachReporter(reporter);
+
+		extent.setSystemInfo("Tester Name", "Ramesh Swarnkar");
+		
+		return extent;
+		
+	}
 
 	
 	@BeforeMethod

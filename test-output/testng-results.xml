@@ -2,20 +2,20 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-03-16T13:53:37 EDT" name="Suite" finished-at="2025-03-16T13:53:56 EDT" duration-ms="18672">
+  <suite started-at="2025-03-16T19:22:38 EDT" name="Suite" finished-at="2025-03-16T19:22:50 EDT" duration-ms="11759">
     <groups>
     </groups>
-    <test started-at="2025-03-16T13:53:37 EDT" name="Test" finished-at="2025-03-16T13:53:56 EDT" duration-ms="18672">
+    <test started-at="2025-03-16T19:22:38 EDT" name="Test" finished-at="2025-03-16T19:22:50 EDT" duration-ms="11759">
       <class name="RameshSwarnkar.Test.googleSearchTest">
-        <test-method is-config="true" signature="initializeDriver()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@43bc63a3]" started-at="2025-03-16T13:53:37 EDT" name="initializeDriver" finished-at="2025-03-16T13:53:49 EDT" duration-ms="11757" status="PASS">
+        <test-method is-config="true" signature="initializeDriver()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@448c8166]" started-at="2025-03-16T19:22:38 EDT" name="initializeDriver" finished-at="2025-03-16T19:22:45 EDT" duration-ms="6606" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initializeDriver -->
-        <test-method signature="searchResultsTest()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@43bc63a3]" started-at="2025-03-16T13:53:49 EDT" name="searchResultsTest" finished-at="2025-03-16T13:53:55 EDT" duration-ms="6133" status="PASS">
+        <test-method signature="searchResultsTest()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@448c8166]" started-at="2025-03-16T19:22:45 EDT" name="searchResultsTest" finished-at="2025-03-16T19:22:48 EDT" duration-ms="3880" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- searchResultsTest -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@43bc63a3]" started-at="2025-03-16T13:53:56 EDT" name="tearDown" finished-at="2025-03-16T13:53:56 EDT" duration-ms="310" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:RameshSwarnkar.Test.googleSearchTest@448c8166]" started-at="2025-03-16T19:22:49 EDT" name="tearDown" finished-at="2025-03-16T19:22:50 EDT" duration-ms="392" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

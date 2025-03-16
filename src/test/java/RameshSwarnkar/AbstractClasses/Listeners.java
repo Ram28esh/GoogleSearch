@@ -7,11 +7,17 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
 public class Listeners extends BaseTest implements ITestListener {
 
-	WebDriver driver;
+
+	ExtentReports extent = extentReportConfig();
+	ExtentTest test;
 	
-	public void getScreenshot(ITestResult result) {
+	public String getScreenshot(ITestResult result) throws IOException {
 		
 		try {
 			driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
@@ -24,12 +30,18 @@ public class Listeners extends BaseTest implements ITestListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return getScreenshot(result.getMethod().getMethodName(), driver);
 	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onTestStart(result);
+	//	ITestListener.super.onTestStart(result);
+		
+		test = extent.createTest(result.getMethod().getMethodName());
+		
+		
 	}
 
 	@Override
@@ -37,7 +49,15 @@ public class Listeners extends BaseTest implements ITestListener {
 		// TODO Auto-generated method stub
 		ITestListener.super.onTestSuccess(result);
 
-		getScreenshot(result);
+		test.log(Status.PASS, "passed !!");
+		
+		try {
+			test.addScreenCaptureFromPath(getScreenshot(result), result.getMethod().getMethodName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -45,7 +65,14 @@ public class Listeners extends BaseTest implements ITestListener {
 		// TODO Auto-generated method stub
 		ITestListener.super.onTestFailure(result);
 		
-		getScreenshot(result);
+		test.fail(result.getThrowable());
+		
+		try {
+			test.addScreenCaptureFromPath(getScreenshot(result), result.getMethod().getMethodName());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -77,6 +104,7 @@ public class Listeners extends BaseTest implements ITestListener {
 	public void onFinish(ITestContext context) {
 		// TODO Auto-generated method stub
 		ITestListener.super.onFinish(context);
+		extent.flush();
 	}
 
 }
