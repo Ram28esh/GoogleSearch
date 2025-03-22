@@ -13,35 +13,37 @@ import com.aventstack.extentreports.Status;
 
 public class Listeners extends BaseTest implements ITestListener {
 
-
 	ExtentReports extent = extentReportConfig();
 	ExtentTest test;
 	
-	public String getScreenshot(ITestResult result) throws IOException {
-		
+	ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>(); // thread safe
+
+	public void screenShot(ITestResult result) {
 		try {
 			driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+		String screenshotFilePath = null;
 		try {
-			getScreenshot(result.getMethod().getMethodName(), driver);
+			screenshotFilePath = getScreenshot(result.getMethod().getMethodName(), driver);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return getScreenshot(result.getMethod().getMethodName(), driver);
-	}
 
+	//	test.addScreenCaptureFromPath(screenshotFilePath, result.getMethod().getMethodName());
+		
+		extentTest.get().addScreenCaptureFromPath(screenshotFilePath, result.getMethod().getMethodName());
+	}
+	
 	@Override
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
-	//	ITestListener.super.onTestStart(result);
-		
+		// ITestListener.super.onTestStart(result);
+
 		test = extent.createTest(result.getMethod().getMethodName());
-		
-		
+		extentTest.set(test);
 	}
 
 	@Override
@@ -49,31 +51,20 @@ public class Listeners extends BaseTest implements ITestListener {
 		// TODO Auto-generated method stub
 		ITestListener.super.onTestSuccess(result);
 
-		test.log(Status.PASS, "passed !!");
+		extentTest.get().log(Status.PASS, "passed !!");
 		
-		try {
-			test.addScreenCaptureFromPath(getScreenshot(result), result.getMethod().getMethodName());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		screenShot(result);
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
 		// TODO Auto-generated method stub
 		ITestListener.super.onTestFailure(result);
-		
-		test.fail(result.getThrowable());
-		
-		try {
-			test.addScreenCaptureFromPath(getScreenshot(result), result.getMethod().getMethodName());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+	//	test.fail(result.getThrowable());
+		extentTest.get().fail(result.getThrowable());
+
+		screenShot(result);
 	}
 
 	@Override
@@ -106,5 +97,4 @@ public class Listeners extends BaseTest implements ITestListener {
 		ITestListener.super.onFinish(context);
 		extent.flush();
 	}
-
 }
